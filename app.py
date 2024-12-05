@@ -22,7 +22,17 @@ async def start():
         {"role": "system", "content": SYSTEM_PROMPT}
     ]
     cl.user_session.set("messages", messages)
-    await cl.Message(content="👋 Hello! I'm your Llama assistant powered by Groq. I'm configured to help analyze text and extract core ideas. How can I help you today?").send()
+    welcome_message = """👋 Hello! I'm your text analysis assistant powered by Llama.
+
+I'm configured to help you analyze text and extract:
+- Core Ideas (Main ideas, Supporting ideas, Context, Counterpoints)
+- Relationships between ideas
+- Analogies and their implications
+- Updated insights and key takeaways
+
+Simply paste the text you'd like to analyze, and I'll break it down for you following this structured approach."""
+
+    await cl.Message(content=welcome_message).send()
 
 @cl.on_message
 async def main(message: cl.Message):
