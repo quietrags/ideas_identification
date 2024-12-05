@@ -8,7 +8,7 @@ load_dotenv()
 
 # Initialize Groq client
 client = groq.Groq(api_key=os.environ.get("GROQ_API_KEY"))
-MODEL = "llama3-8b-8192"  # This is the model identifier for Llama 3.1-8b on Groq
+MODEL = "llama-3.1-70b-versatile"  # This is the model identifier for Llama 3.1-8b on Groq
 
 # Load system prompt
 with open("prompt.txt", "r") as f:
