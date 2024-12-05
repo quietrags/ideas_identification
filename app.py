@@ -14,10 +14,23 @@ MODEL = "llama3-8b-8192"  # This is the model identifier for Llama 3.1-8b on Gro
 with open("prompt.txt", "r") as f:
     SYSTEM_PROMPT = f.read()
 
+def create_analysis_prompt(text_to_analyze):
+    return f"""Please analyze the following text according to the provided framework:
+
+TEXT TO ANALYZE:
+{text_to_analyze}
+
+Please provide a structured analysis following these steps:
+1. Identify Core Ideas (Main Ideas, Supporting Ideas, Context, Counterpoints)
+2. Identify Relationships between ideas (Causal, Contrast/Comparison, Sequential, Hierarchical, Associative)
+3. Unpack any Analogies present
+4. Generate Updated Insights
+
+Please format your response clearly with appropriate headings and bullet points."""
+
 @cl.on_chat_start
 async def start():
     """Initialize the chat session."""
-    # Initialize chat history in the user session with system prompt
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT}
     ]
@@ -41,17 +54,23 @@ async def main(message: cl.Message):
         # Get chat history
         messages = cl.user_session.get("messages")
         
-        # Add user message to history
-        messages.append({"role": "user", "content": message.content})
+        # Create analysis prompt with the user's text
+        analysis_request = create_analysis_prompt(message.content)
+        
+        # Set up the messages for the API call
+        api_messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": analysis_request}
+        ]
         
         # Create the chat completion
         completion = client.chat.completions.create(
-            messages=messages,
+            messages=api_messages,
             model=MODEL,
             temperature=0.7,
-            max_tokens=1024,
+            max_tokens=2048,  # Increased for longer analyses
             top_p=1,
-            stream=True  # Enable streaming for better UX
+            stream=True
         )
 
         # Initialize response message
@@ -66,8 +85,11 @@ async def main(message: cl.Message):
                 full_response += content
                 await response_message.stream_token(content)
 
-        # Add assistant's message to history
-        messages.append({"role": "assistant", "content": full_response})
+        # Add the interaction to chat history
+        messages.extend([
+            {"role": "user", "content": message.content},
+            {"role": "assistant", "content": full_response}
+        ])
         
         # Update chat history in session
         cl.user_session.set("messages", messages)
