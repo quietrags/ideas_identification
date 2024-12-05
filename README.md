@@ -1,14 +1,46 @@
 # Ideas Identification
 
-A modern chat interface powered by Llama 3.1-8b through Groq's API, built with Chainlit. This application provides a responsive and intuitive way to interact with the Llama language model.
+A sophisticated text analysis tool powered by Llama 3.1-8b through Groq's API, built with Chainlit. This application helps analyze text content by identifying core ideas, relationships, analogies, and generating insights.
 
 ## Features
 
-- Real-time streaming responses
-- Persistent chat history within sessions
-- Modern, responsive UI powered by Chainlit
-- High-performance inference using Groq's API
-- Secure environment variable handling
+- 🔍 Comprehensive text analysis following a structured framework:
+  - Core Ideas identification (Main, Supporting, Context, Counterpoints)
+  - Relationship mapping between ideas
+  - Analogy analysis
+  - Insight generation
+- 🚀 Real-time streaming responses
+- 💬 Persistent chat history within sessions
+- 🎯 Focused analysis prompts
+- ⚡ High-performance inference using Groq's API
+- 🛡️ Secure environment variable handling
+
+## Analysis Framework
+
+The tool analyzes text using the following structured approach:
+
+1. **Core Ideas**
+   - Main Ideas: Central propositions or themes
+   - Supporting Ideas: Details, examples, or evidence
+   - Contextual Elements: Background and framing devices
+   - Counterpoints: Risks, challenges, or opposing views
+
+2. **Relationships**
+   - Causal relationships
+   - Contrast/Comparison
+   - Sequential progression
+   - Hierarchical connections
+   - Associative links
+
+3. **Analogies**
+   - Comparative elements
+   - Supporting concepts
+   - Implications and risks
+
+4. **Updated Insights**
+   - Evolution of ideas
+   - Key takeaways
+   - Trade-offs and considerations
 
 ## Prerequisites
 
@@ -19,7 +51,7 @@ A modern chat interface powered by Llama 3.1-8b through Groq's API, built with C
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ideas_identification.git
+git clone https://github.com/quietrags/ideas_identification.git
 cd ideas_identification
 ```
 
@@ -49,21 +81,48 @@ chainlit run app.py -w
 http://localhost:8000
 ```
 
-3. Start chatting with the model!
+3. Paste any text you want to analyze into the chat interface
+4. The system will provide a structured analysis following the framework
+
+## Example Analysis
+
+Input any text, such as articles, papers, or documents, and receive a structured analysis that includes:
+
+```
+1. Core Ideas
+   - Main Ideas: [Key themes and central arguments]
+   - Supporting Ideas: [Evidence and examples]
+   - Context: [Background information]
+   - Counterpoints: [Challenges and opposing views]
+
+2. Relationships
+   - [Identified connections between ideas]
+   - [Cause-effect relationships]
+   - [Comparisons and contrasts]
+
+3. Analogies
+   - [Analysis of comparative elements]
+   - [Implications and insights]
+
+4. Updated Insights
+   - [Key takeaways]
+   - [Synthesized understanding]
+   - [Practical implications]
+```
 
 ## Configuration
 
-The application can be configured through the following files:
+The application can be configured through:
 - `.env`: Environment variables including API keys
-- `chainlit.md`: Customize the welcome message and chat interface
-- `app.py`: Adjust model parameters like temperature and max tokens
+- `prompt.txt`: System prompt defining the analysis framework
+- `app.py`: Model parameters and application settings
 
 ## Model Parameters
 
 Current configuration:
 - Model: `llama3-8b-8192`
 - Temperature: 0.7
-- Max Tokens: 1024
+- Max Tokens: 2048
 - Top P: 1.0
 
 ## License
