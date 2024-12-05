@@ -1,0 +1,10 @@
+[project]
+name = "ideas-identification"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pip>=24.3.1",
+    "spacy>=3.8.2",
+]

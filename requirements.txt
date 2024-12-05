@@ -1,0 +1,6 @@
+chainlit==0.7.700
+groq
+python-dotenv
+transformers
+torch
+accelerate
