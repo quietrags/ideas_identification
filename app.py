@@ -10,12 +10,19 @@ load_dotenv()
 client = groq.Groq(api_key=os.environ.get("GROQ_API_KEY"))
 MODEL = "llama3-8b-8192"  # This is the model identifier for Llama 3.1-8b on Groq
 
+# Load system prompt
+with open("prompt.txt", "r") as f:
+    SYSTEM_PROMPT = f.read()
+
 @cl.on_chat_start
 async def start():
     """Initialize the chat session."""
-    # Initialize chat history in the user session
-    cl.user_session.set("messages", [])
-    await cl.Message(content="👋 Hello! I'm your Llama assistant powered by Groq. How can I help you today?").send()
+    # Initialize chat history in the user session with system prompt
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT}
+    ]
+    cl.user_session.set("messages", messages)
+    await cl.Message(content="👋 Hello! I'm your Llama assistant powered by Groq. I'm configured to help analyze text and extract core ideas. How can I help you today?").send()
 
 @cl.on_message
 async def main(message: cl.Message):
